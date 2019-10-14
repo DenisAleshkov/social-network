@@ -1,0 +1,26 @@
+.links {
+    color: #ffffff;
+    font-size: 20px;
+    padding: 20px;
+    display: block;
+}
+
+.navbar {
+    display: inline-block;
+    border: 5px solid #ffffff;
+    border-bottom: none;
+}
+
+.item {
+    text-align: center;
+    border-bottom: 5px solid #ffffff;
+    transition: all 0.2s ease;
+}
+
+.item:hover {
+    background-color: #ffb91a;
+}
+
+.active {
+    background-color: #ffb91a;
+}
