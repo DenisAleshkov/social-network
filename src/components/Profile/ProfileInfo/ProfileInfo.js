@@ -3,16 +3,17 @@ import style from './ProfileInfo.module.css';
 import avatar from './../../../avatar.png';
 
 const ProfileInfo = (props) => {
-    
+
     let newPostElement = React.createRef();
 
     let addPost = () => {
-        props.addPost();
+        props.dispatch({ type: 'ADD-POST' });
     }
-
+ 
     let onPostChange = () => {
         let text = newPostElement.current.value;
-        props.updateNewPostText(text);
+        let actione={type: 'UPDATE-NEW-POST-TEXT', newText: text}
+        props.dispatch(actione);
     }
     return (
         <div className={style.avatar}>
