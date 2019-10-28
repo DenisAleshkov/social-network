@@ -1,5 +1,6 @@
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+import ProfileReducer from "./profileReducer";
+import MessageReducer from "./messagesReducer";
+import sidebarReducer from "./sidebarReducer";
 let store = {
     //закрытие деталей
     _state: {
@@ -96,11 +97,14 @@ let store = {
             ],
             newMessageText: ""
         },
+        sidebar: {},
 
     },
+
     getState() {
         return this._state;
     },
+
     //    сделали методы
     _callSubscriber() {
         console.log('state is changed');
@@ -112,32 +116,10 @@ let store = {
 
     dispatch(actione) { //{type:'text'}-обязательное свойство
 
-        if (actione.type === ADD_POST) {
-            let newPost = {
-                id: 6,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0
-            }
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._callSubscriber(this._state);
-
-        } else if (actione.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = actione.newText;
-            this._callSubscriber(this._state);
-        }
-    }
-}
-export let addPostActionCreator = () => {
-    return {
-        type: ADD_POST,
-    }
-}
-
-export let updateNewPostTextActionCreator = (text) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text
+        this._state.profilePage = ProfileReducer(this._state.profilePage, actione);
+        this._state.messagesPage = MessageReducer(this._state.messagesPage, actione);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, actione);
+        this._callSubscriber(this._state);
     }
 }
 
