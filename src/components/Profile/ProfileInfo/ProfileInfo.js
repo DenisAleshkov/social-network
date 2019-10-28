@@ -1,18 +1,22 @@
 import React from 'react';
 import style from './ProfileInfo.module.css';
 import avatar from './../../../avatar.png';
+import {addPostActionCreator, updateNewPostTextActionCreator} from './../../../redux/state.js';
+
+//утилита (вспомогательная программа),
+//помогает не ошибиться в создании action
 
 const ProfileInfo = (props) => {
 
     let newPostElement = React.createRef();
 
     let addPost = () => {
-        props.dispatch({ type: 'ADD-POST' });
+        props.dispatch(addPostActionCreator());
     }
- 
+
     let onPostChange = () => {
         let text = newPostElement.current.value;
-        let actione={type: 'UPDATE-NEW-POST-TEXT', newText: text}
+        let actione = updateNewPostTextActionCreator(text);
         props.dispatch(actione);
     }
     return (

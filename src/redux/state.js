@@ -109,8 +109,10 @@ let store = {
     subscribe(observer) {
         this._callSubscriber = observer;
     },
+
     dispatch(actione) { //{type:'text'}-обязательное свойство
-        if (actione.type === 'ADD-POST') {
+
+        if (actione.type === ADD_POST) {
             let newPost = {
                 id: 6,
                 message: this._state.profilePage.newPostText,
@@ -119,12 +121,26 @@ let store = {
             this._state.profilePage.posts.push(newPost);
             this._state.profilePage.newPostText = '';
             this._callSubscriber(this._state);
-        } else if (actione.type === 'UPDATE-NEW-POST-TEXT') {
+
+        } else if (actione.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = actione.newText;
             this._callSubscriber(this._state);
         }
     }
 }
+export let addPostActionCreator = () => {
+    return {
+        type: ADD_POST,
+    }
+}
+
+export let updateNewPostTextActionCreator = (text) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        newText: text
+    }
+}
+
 
 
 window.store = store;
