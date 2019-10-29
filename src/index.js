@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import store from './redux/state.js';
+import store from './redux/redux-store.js';
 import { BrowserRouter } from "react-router-dom";
 
 let rerenderEntireTree = (state) => {
@@ -13,7 +13,11 @@ let rerenderEntireTree = (state) => {
         </BrowserRouter>, document.getElementById('root'));
 }
 rerenderEntireTree(store.getState());
-store.subscribe(rerenderEntireTree);
+
+store.subscribe( () => {
+    let state=store.getState();
+    rerenderEntireTree(store.getState());
+});
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
