@@ -61,8 +61,8 @@ let initialState = {
 };
 //фукнция принимает state actione 
 //возвращает state
-const MessageReducer = (state = initialState, actione) => {
-    switch (actione.type) {
+const MessageReducer = (state = initialState, action) => {
+    switch (action.type) {
         case ADD_MESSAGE:
             let newtext = state.newMessageText;
             state.messages.push({
@@ -73,7 +73,7 @@ const MessageReducer = (state = initialState, actione) => {
             return state;
 
         case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = actione.newText;
+            state.newMessageText = action.newText;
 
         default:
             return state;

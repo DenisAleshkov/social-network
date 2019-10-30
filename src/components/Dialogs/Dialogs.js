@@ -6,19 +6,20 @@ import { addMessageActionCreator, updateNewMessageTextActionCreator } from '../.
 
 
 const Dialogs = (props) => {
-
-    let dialogsElements = props.state.dialogs.map(d => <DialogItem name={d.name} id={d.id} />);
-    let messageElement = props.state.messages.map(m => <MessageItem message={m.message} />)
-    let newMessageText = props.state.newMessageText;
+    
+    let state = props.store.getState().messagesPage;
+    let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} />);
+    let messageElement = state.messages.map(m => <MessageItem message={m.message} />)
+    let newMessageText = state.newMessageText;
 
     let addMessage = () => {
-        props.dispatch(addMessageActionCreator());
+        props.store.dispatch(addMessageActionCreator());
     }
 
     let onMessageChange = (e) => {
         let text = e.target.value;
         let actione = updateNewMessageTextActionCreator(text);
-        props.dispatch(actione);
+        props.store.dispatch(actione);
     }
 
     return (
@@ -30,7 +31,10 @@ const Dialogs = (props) => {
                 {messageElement}
             </div>
             <div>
-                <textarea value={newMessageText} placeholder="input-message" onChange={onMessageChange}></textarea>
+                <textarea value={newMessageText}
+                    placeholder="input-message"
+                    onChange={onMessageChange}>
+                </textarea>
                 <button onClick={addMessage}>Send</button>
             </div>
 

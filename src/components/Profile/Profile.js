@@ -3,7 +3,7 @@ import style from './Profile.module.css';
 import Posts from './MyPosts/Posts.js';
 import ProfileInfo from './../Profile/ProfileInfo/ProfileInfo.js';
 const Profile = (props) => {
-debugger
+
     return (
         <div className={style.info}>
             <ProfileInfo dispatch={props.dispatch}

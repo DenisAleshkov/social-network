@@ -2,7 +2,9 @@ const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 //параметры по умолчанию
 let initialState = {
-    posts: [{
+    posts: [
+
+        {
             id: 1,
             message: 'Hi, how are you?',
             likesCount: 12
@@ -37,8 +39,8 @@ let initialState = {
 };
 //фукнция принимает state actione 
 //возвращает state
-const ProfileReducer = (state = initialState, actione) => {
-    switch (actione.type) {
+const ProfileReducer = (state = initialState, action) => {
+    switch (action.type) {
         case ADD_POST:
             let newPost = {
                 id: 6,
@@ -50,7 +52,7 @@ const ProfileReducer = (state = initialState, actione) => {
             return state;
 
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = actione.newText;
+            state.newPostText = action.newText;
             return state;
 
         default:
