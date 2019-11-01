@@ -1,7 +1,6 @@
 import React from 'react';
 import style from './ProfileInfo.module.css';
 import avatar from './../../../avatar.png';
-import { addPostActionCreator, updateNewPostTextActionCreator } from './../../../redux/profileReducer';
 
 //утилита (вспомогательная программа),
 //помогает не ошибиться в создании action

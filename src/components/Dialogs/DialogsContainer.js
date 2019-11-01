@@ -3,11 +3,12 @@ import { addMessageActionCreator, updateNewMessageTextActionCreator } from '../.
 import Dialogs from './Dialogs';
 import StoreContext from '../../StoreContext';
 //Контейнерная компонента
-const DialogsContainer = (props) => {
+const DialogsContainer = () => {
 
     return (<StoreContext.Consumer>
         {
             (store) => {
+               
                 let addMessage = () => {
                     store.dispatch(addMessageActionCreator());
                 }
