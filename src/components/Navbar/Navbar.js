@@ -19,6 +19,9 @@ const Navbar = () => {
                     <a className={style.links} href="#">Music</a>
                 </li>
                 <li className={style.item}>
+                    <a className={style.links} href="#">Find Users</a>
+                </li>
+                <li className={style.item}>
                     <a className={style.links} href="#">Settings</a>
                 </li>
             </ul>

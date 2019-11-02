@@ -62,30 +62,40 @@ let initialState = {
 //фукнция принимает state actione 
 //возвращает state
 const MessageReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ADD_MESSAGE:
-            let newtext = state.newMessageText;
-            state.messages.push({
-                id: 6,
-                message: newtext
-            });
-            state.newMessageText = '';
-            return state;
+        switch (action.type) {
+            case ADD_MESSAGE:
+                {
+                    return {
+                        ...state,
+                        newMessageText: '',
+                        messages: [...state.messages, {
+                            id: 6,
+                            message: state.newMessageText
+                        }],
+                    };
+                }
+            case UPDATE_NEW_MESSAGE_TEXT:
+                {
+                    return {
+                        ...state,
+                        newMessageText: action.newText
+                    };
 
-        case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = action.newText;
+                }
 
-        default:
-            return state;
+            default:
+                return state;
+        }
     }
-}
-
+    //утилита (вспомогательная программа),
+    //помогает не ошибиться в создании action
 export let addMessageActionCreator = () => {
-    return {
-        type: ADD_MESSAGE,
+        return {
+            type: ADD_MESSAGE,
+        }
     }
-}
-
+    //утилита (вспомогательная программа),
+    //помогает не ошибиться в создании action
 export let updateNewMessageTextActionCreator = (text) => {
     return {
         type: UPDATE_NEW_MESSAGE_TEXT,

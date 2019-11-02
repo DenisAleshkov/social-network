@@ -1,32 +1,26 @@
 import React from 'react';
 import MyPosts from './MyPosts';
 import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../redux/profileReducer';
-import StoreContext from './../../../StoreContext.js';
-
-//утилита (вспомогательная программа),
-//помогает не ошибиться в создании action
-const MyPostsContainer = () => {
-    //имеет доступ к store, который возьмем из контекста
-    return ( <StoreContext.Consumer> 
-        {
-            (store) => {
-                let state = store.getState();
-                let addPost = () => {
-                    store.dispatch(addPostActionCreator());
-                }
-                let onPostChange = (text) => {
-                    let action = updateNewPostTextActionCreator(text);
-                    store.dispatch(action);
-                }
-                return <MyPosts updateNewPostText = { onPostChange }
-                addPost = { addPost }
-                posts = { state.profilePage.posts }
-                newPostText = { state.profilePage.newPostText }
-                />
-            }
-        } 
-        </StoreContext.Consumer>
-    )
+import { connect } from 'react-redux';
+//Контейнерная компонента
+let mapStateToProps = (state) => {
+    return {
+        newPostText: state.profilePage.newPostText,
+        posts: state.profilePage.posts
+    }
 }
-
+let mapDispatchToProps = (dispatch) => {
+    return {
+        addPost: () => {
+            dispatch(addPostActionCreator());
+        },
+        updateNewPostText: (text) => {
+            let action = updateNewPostTextActionCreator(text);
+            dispatch(action);
+        }
+    }
+}
+//законектить презентационную компоненту к store
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
+//новая контейнерная компонента
 export default MyPostsContainer;

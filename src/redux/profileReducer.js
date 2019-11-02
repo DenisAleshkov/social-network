@@ -40,32 +40,39 @@ let initialState = {
 //фукнция принимает state actione 
 //возвращает state
 const ProfileReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ADD_POST:
-            let newPost = {
-                id: 6,
-                message: state.newPostText,
-                likesCount: 0
-            }
-            state.posts.push(newPost);
-            state.newPostText = '';
-            return state;
+        switch (action.type) {
+            case ADD_POST:
+                return {
+                    ...state,
+                    newPostText: '',
+                    posts: [...state.posts, {
+                        id: 6,
+                        message: state.newPostText,
+                        likesCount: 0
+                    }]
+                }
+            case UPDATE_NEW_POST_TEXT:
+                {
+                    return {
+                        ...state,
+                        newPostText: action.newText
+                    }
+                }
 
-        case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText;
-            return state;
+            default:
+                return state;
+        }
 
-        default:
-            return state;
     }
-
-}
+    //утилита (вспомогательная программа),
+    //помогает не ошибиться в создании action
 export let addPostActionCreator = () => {
-    return {
-        type: ADD_POST,
+        return {
+            type: ADD_POST,
+        }
     }
-}
-
+    //утилита (вспомогательная программа),
+    //помогает не ошибиться в создании action
 export let updateNewPostTextActionCreator = (text) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
