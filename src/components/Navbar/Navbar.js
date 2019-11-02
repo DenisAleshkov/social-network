@@ -19,7 +19,7 @@ const Navbar = () => {
                     <a className={style.links} href="#">Music</a>
                 </li>
                 <li className={style.item}>
-                    <a className={style.links} href="#">Find Users</a>
+                <NavLink className={style.links} to="/users" activeClassName={style.active}>Find Users</NavLink>
                 </li>
                 <li className={style.item}>
                     <a className={style.links} href="#">Settings</a>
