@@ -2,3 +2,12 @@
     width: 100px;
     height: 100px;
 }
+
+.selectedPage {
+    color: yellow;
+    cursor: pointer;
+}
+
+span {
+    cursor: pointer;
+}
