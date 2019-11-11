@@ -79,30 +79,31 @@ const usersReducer = (state = initialState, action) => {
         }
     }
     //follow
-export const followAC = (userID) => ({
+export const follow = (userID) => ({
         type: FOLLOW,
         userID
     })
     //unfollow
-export const unfollowAC = (userID) => ({
+export const unfollow = (userID) => ({
     type: UNFOLLOW,
     userID
 })
-export const setUsersAC = (users) => ({
+export const setUsers = (users) => ({
         type: SET_USERS,
         users
     })
     //изменить текущую страницу
-export const setCurrentPageAC = (currentPage) => ({
+export const setCurrentPage = (currentPage) => ({
         type: SET_CURRENT_PAGE,
         currentPage
     })
     //установить общее кол-во пользователей
-export const setUsersTotalCountAC = (totalUsersCount) => ({
-    type: SET_USERS_TOTAL_COUNT,
-    count: totalUsersCount
-})
-export const setIsFetchingAC = (isFetching) => ({
+export const setUsersTotalCount = (totalUsersCount) => ({
+        type: SET_USERS_TOTAL_COUNT,
+        count: totalUsersCount
+    })
+    //создание preloader
+export const setIsFetching = (isFetching) => ({
     type: TOGLE_IS_FETCHING,
     isFetching
 })

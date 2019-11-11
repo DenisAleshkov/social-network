@@ -9,6 +9,8 @@ import {Provider} from 'react-redux';
 let rerenderEntireTree = (state) => {
 
     ReactDOM.render(
+    //BrowserRouter оборачиваем содержимое чтобы
+    //дочерние компоненты могли достучаться до контекста
         <BrowserRouter>
             <Provider store={store}>
                 <App />

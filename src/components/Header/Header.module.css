@@ -22,3 +22,7 @@ header {
     border-top: 5px solid #ffffff;
     border-bottom: 5px solid #ffffff;
 }
+
+.LoginBlock {
+    float: right
+}

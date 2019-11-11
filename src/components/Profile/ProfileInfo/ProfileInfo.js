@@ -1,17 +1,16 @@
 import React from 'react';
 import style from './ProfileInfo.module.css';
-import avatar from './../../../avatar.png';
+import Preloader from '../../common/preloader';
 
-//утилита (вспомогательная программа),
-//помогает не ошибиться в создании action
-
-const ProfileInfo = () => {
-
+const ProfileInfo = (props) => {
+    
+    if (!props.profile) {
+        return <Preloader />
+    }
+    
     return (
         <div className={style.avatar}>
-
-            <img className={style.avatarImage} src={avatar} alt="аватар" />
-
+            <img src={props.profile.photos.large} alt="avatar" />
         </div>
     );
 }
