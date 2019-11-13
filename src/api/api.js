@@ -10,39 +10,31 @@ let instanse = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/'
 })
 
-export const followAPI = {
-    follow(id) {
-        return instanse.delete(`https://social-network.samuraijs.com/api/1.0/follow/${id}`)
-            .then(respons => {
-                return respons.data;
-            })
-    }
-}
-
-export const unfollowAPI = {
-    unfollow(id) {
-        return instanse.post(`https://social-network.samuraijs.com/api/1.0/follow/${id}`)
-            .then(respons => {
-                return respons.data;
-            })
-    }
-
-}
-
 export const usersAPI = {
     getUsers(currentPage, pageUsersSize) {
         return instanse.get(`users?page=${currentPage}&count=${pageUsersSize}`)
             .then(response => {
                 return response.data;
             });
+    },
+    getProfile(userId) {
+        return instanse.get(`profile/` + userId);
+    },
+    follow(id) {
+        return instanse.post(`follow/${id}`)
+            .then(respons => {
+                return respons.data;
+            })
+    },
+    unfollow(id) {
+        return instanse.delete(`follow/${id}`)
+            .then(respons => {
+                return respons.data;
+            })
     }
 }
-
-// export const getUsers2 = (currentPage, pageUsersSize) => {
-//     return instanse.get(`users?page=${currentPage}&count=${pageUsersSize}`, {
-//         withCredentials: true
-//     })
-//         .then(response => {
-//             return response.data;
-//         })
-// }
+export const authAPI={
+    me(){
+        return instanse.get(`auth/me`);
+    }
+}

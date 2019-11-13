@@ -1,16 +1,20 @@
+import { usersAPI } from "../api/api";
+
 const UNFOLLOW = 'UNFOLLOW';
 const FOLLOW = 'FOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
 const TOGLE_IS_FETCHING = 'TOGLE_IS_FETCHING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
 
 let initialState = {
     users: [],
     totalUsersCount: 0,
     pageUsersSize: 5,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: []
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -73,18 +77,27 @@ const usersReducer = (state = initialState, action) => {
                         isFetching: action.isFetching
                     }
                 }
+            case TOGGLE_IS_FOLLOWING_PROGRESS:
+                {
+                    return {
+                        ...state,
+                        followingInProgress: action.isFetching
+                        ?[...state.followingInProgress,action.userID]
+                        : state.followingInProgress.filter(id=>id!=action.userID)
+                    }
+                }
             default:
                 return state;
 
         }
     }
     //follow
-export const follow = (userID) => ({
+export const FollowSucces = (userID) => ({
         type: FOLLOW,
         userID
     })
     //unfollow
-export const unfollow = (userID) => ({
+export const unFollowSucces = (userID) => ({
     type: UNFOLLOW,
     userID
 })
@@ -103,8 +116,53 @@ export const setUsersTotalCount = (totalUsersCount) => ({
         count: totalUsersCount
     })
     //создание preloader
-export const setIsFetching = (isFetching) => ({
+export const toggleIsFetching = (isFetching) => ({
     type: TOGLE_IS_FETCHING,
     isFetching
 })
+export const toggleFollowingProgress = (isFetching,userID) => ({
+    type: TOGGLE_IS_FOLLOWING_PROGRESS,
+    isFetching,
+    userID
+})
+
+//thunk-функци, которые внутри делают бизнесс логику,
+//связанную с синхронной операцией
+//в thunk диспатчим вызов action-creator
+//вызывается внутри бизнеса
+export const getUsers=(currentPage, pageUsersSize)=>{
+return (dispatch)=>{
+    dispatch(toggleIsFetching(true));
+    usersAPI.getUsers(currentPage, pageUsersSize)
+     .then(data => {
+         dispatch(toggleIsFetching(false));
+         dispatch(setUsers(data.items));
+         dispatch(setUsersTotalCount(data.totalCount));
+     });
+    }
+}
+
+export const unfollow=(userID)=>{
+    return (dispatch)=>{
+        dispatch(toggleFollowingProgress(true,userID));
+        usersAPI.unfollow(userID).then(data => {
+         if(data.resultCode==0){
+              dispatch(unFollowSucces(userID)); 
+            }
+            dispatch(toggleFollowingProgress(false,userID));
+            });
+    }
+}
+
+export const follow=(userID)=>{
+    return (dispatch)=>{
+        dispatch(toggleFollowingProgress(true,userID));
+        usersAPI.follow(userID).then(data => {
+            if(data.resultCode==0){
+            dispatch(FollowSucces(userID)) 
+            }
+             dispatch(toggleFollowingProgress(false,userID));
+        });
+    }
+}
 export default usersReducer;
