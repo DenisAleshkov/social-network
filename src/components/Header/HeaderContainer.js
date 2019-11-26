@@ -3,13 +3,12 @@ import Header from './Header.js';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { getAuthUserData } from './../../redux/authReducer.js';
-import { authAPI } from '../../api/api.js';
 class HeaderContainer extends React.Component {
     componentDidMount() {
        this.props.getAuthUserData()
     }
     render() {
-        return <Header {...this.props }/>
+        return <Header {...this.props } />
     }
 }
 const mapStateToProps = (state) => ({

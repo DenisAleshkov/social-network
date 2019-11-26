@@ -4,8 +4,9 @@ import HeaderContainer from './components/Header/HeaderContainer.js';
 import Navbar from './components/Navbar/Navbar.js';
 import { Route } from "react-router-dom";
 import DialogsContainer from './components/Dialogs/DialogsContainer.js';
-import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
+import UsersContainer from './components/Users/UsersContainer.js';
+import ProfileContainer from './components/Profile/ProfileContainer.js';
+import Login from './components/Login/Login.js';
 
 
 const App = (props) => {
@@ -27,6 +28,9 @@ const App = (props) => {
 
                     <Route path='/users' render={() =>
                         <UsersContainer />} />
+
+                    <Route path='/login' render={() =>
+                          <Login /> } />
                 </div>
             </div>
         </div>

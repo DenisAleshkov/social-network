@@ -91,11 +91,12 @@ export let updateNewPostTextActionCreator = (text) => {
     }
 }
 export let setUserProfile = (profile) => {
-    return {
-        type: SET_USER_PROFILE,
-        profile
+        return {
+            type: SET_USER_PROFILE,
+            profile
+        }
     }
-}
+    //диспачим action
 export const getUserProfile = (userId) => (dispatch) => {
     usersAPI.getProfile(userId).then(response => {
         dispatch(setUserProfile(response.data));
