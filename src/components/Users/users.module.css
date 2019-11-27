@@ -5,9 +5,4 @@
 
 .selectedPage {
     color: yellow;
-    cursor: pointer;
-}
-
-span {
-    cursor: pointer;
 }

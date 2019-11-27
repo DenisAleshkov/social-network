@@ -5,6 +5,7 @@ import Profile from './Profile';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import { WithAuthRedirect } from '../hoc/WithAuthRedirect.js';
+import { compose } from 'redux';
 
 
 
@@ -33,10 +34,6 @@ class ProfileContainer extends React.Component {
         );
     }
 }
-    
-//в hoc передаем целевую компоненту
-//внутри hoc создается классовя(функц-ая) и возвращается
-let AuthRedirectComponent=WithAuthRedirect(ProfileContainer);
 
 let mapStateToProps = (state) => {
     return {
@@ -44,8 +41,15 @@ let mapStateToProps = (state) => {
         
     }
 }
-//с помощью withRouter возвращает новую компоненту
-//чтобы получить данные из URL
-let withUrlDataContainerComponent = withRouter(AuthRedirectComponent);
-//connect получает данные от store
-export default connect(mapStateToProps, { getUserProfile })(withUrlDataContainerComponent);
+//compose видим как оборачивается компонента
+export default compose(
+    //connect получает данные от store
+    connect(mapStateToProps, { getUserProfile }),
+    //с помощью withRouter возвращает новую компоненту
+    //чтобы получить данные из URL
+    withRouter,
+    //в hoc передаем целевую компоненту
+    //внутри hoc создается классовя(функц-ая) и возвращается
+    )(ProfileContainer);
+
+

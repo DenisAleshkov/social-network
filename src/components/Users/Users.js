@@ -2,10 +2,8 @@ import React from 'react';
 import userPhoto from './../../avatar.png';
 import style from './users.module.css';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
-import { usersAPI } from '../../api/api';
 let Users = (props) => {
-debugger
+
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageUsersSize);
     let pages = [];
 
@@ -16,8 +14,9 @@ debugger
     return <div>
         <div>
             {pages.map(p => {
+                
                 return <span className={props.currentPage === p && style.selectedPage}
-                    onClick={(e) => { props.onPageChanged(p) }}>
+                    onClick={(e) => { props.onPageChanged(p) } }>
                     {p}
                 </span>
             })}
@@ -31,11 +30,11 @@ debugger
                         </div>
                     </NavLink>
                     <div>
-                        {u.followed
+                        {u.followed 
                             //some-если кто нибудь из этого массива равен id
                             //some() вернет true
                             ? <button disabled={props.followingInProgress.some(id => id === u.id)}
-                                onClick={() => {
+                                onClick={() => {debugger 
                                     props.unfollow(u.id);
                                 }}>Unfollow</button>
 

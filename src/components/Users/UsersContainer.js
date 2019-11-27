@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import Users from './Users.js';
 import { follow, unfollow, setCurrentPage, toggleFollowingProgress,getUsers } from '../../redux/usersReducer.js';
 import Preloader from '../common/preloader.js';
+import { compose } from 'redux';
+import { WithAuthRedirect } from '../hoc/WithAuthRedirect.js';
 //контейнерная компонента
 
 class UsersContainer extends React.Component {
@@ -45,11 +47,17 @@ let mapStateToProps = (state) => {
         followingInProgress:state.usersPage.followingInProgress
     }
 }
-
-export default connect(mapStateToProps, {
-    follow,
-    unfollow,
-    setCurrentPage,
-    toggleFollowingProgress,
-    getUsers
-})(UsersContainer);
+//compose видим как оборачивается компонента
+export default compose(
+    //в hoc передаем целевую компоненту
+    //внутри hoc создается классовя(функц-ая) и возвращается
+    WithAuthRedirect,
+    // законектить презентационную компоненту к store
+    connect(mapStateToProps, {
+        follow,
+        unfollow,
+        setCurrentPage,
+        toggleFollowingProgress,
+        getUsers
+    })
+)(UsersContainer);

@@ -5,7 +5,7 @@ import * as axios from 'axios';
 let instanse = axios.create({
     withCredentials: true,
     headers: {
-        "API-KEY": "6855f9f4-a82f-47ab-bf4b-bd8bd350ef69"
+        "API-KEY": "79959fd9-9679-42db-a7be-96f24c09a3f3"
     },
     baseURL: 'https://social-network.samuraijs.com/api/1.0/'
 })
@@ -33,8 +33,8 @@ export const usersAPI = {
             })
     }
 }
-export const authAPI={
-    me(){
+export const authAPI = {
+    me() {
         return instanse.get(`auth/me`);
     }
 }
