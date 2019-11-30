@@ -1,7 +1,6 @@
 import { usersAPI, profileAPI } from "../api/api";
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS'
     //параметры по умолчанию
@@ -39,7 +38,6 @@ let initialState = {
             likesCount: 1
         },
     ],
-    newPostText: 'denis',
     profile: null,
     status: '',
 };
@@ -48,21 +46,14 @@ let initialState = {
 const ProfileReducer = (state = initialState, action) => {
         switch (action.type) {
             case ADD_POST:
+                let newPost = action.newPostText;
                 return {
                     ...state,
-                    newPostText: '',
                     posts: [...state.posts, {
                         id: 6,
-                        message: state.newPostText,
+                        message: newPost,
                         likesCount: 0
                     }]
-                }
-            case UPDATE_NEW_POST_TEXT:
-                {
-                    return {
-                        ...state,
-                        newPostText: action.newText
-                    }
                 }
             case SET_USER_PROFILE:
                 {
@@ -86,13 +77,12 @@ const ProfileReducer = (state = initialState, action) => {
     }
     //утилита (вспомогательная программа),
     //помогает не ошибиться в создании action
-export let addPostActionCreator = () => ({ type: ADD_POST })
+export let addPostActionCreator = (newPostText) => ({
+        type: ADD_POST,
+        newPostText
+    })
     //утилита (вспомогательная программа),
     //помогает не ошибиться в создании action
-export let updateNewPostTextActionCreator = (text) => ({
-    type: UPDATE_NEW_POST_TEXT,
-    newText: text
-})
 export let setUserProfile = (profile) => ({
     type: SET_USER_PROFILE,
     profile

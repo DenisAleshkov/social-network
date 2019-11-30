@@ -1,6 +1,6 @@
 import React from 'react';
 import MyPosts from './MyPosts';
-import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../redux/profileReducer';
+import { addPostActionCreator } from '../../../redux/profileReducer';
 import { connect } from 'react-redux';
 //Контейнерная компонента
 let mapStateToProps = (state) => {
@@ -10,17 +10,13 @@ let mapStateToProps = (state) => {
     }
 }
 let mapDispatchToProps = (dispatch) => {
-    return {
-        addPost: () => {
-            dispatch(addPostActionCreator());
-        },
-        updateNewPostText: (text) => {
-            let action = updateNewPostTextActionCreator(text);
-            dispatch(action);
+        return {
+            addPost: (newPostText) => {
+                dispatch(addPostActionCreator(newPostText));
+            },
         }
     }
-}
-//законектить презентационную компоненту к store
+    //законектить презентационную компоненту к store
 const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
 //новая контейнерная компонента
 export default MyPostsContainer;
