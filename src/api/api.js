@@ -10,6 +10,7 @@ let instanse = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/'
 })
 
+
 export const usersAPI = {
     getUsers(currentPage, pageUsersSize) {
         return instanse.get(`users?page=${currentPage}&count=${pageUsersSize}`)
@@ -18,7 +19,8 @@ export const usersAPI = {
             });
     },
     getProfile(userId) {
-        return instanse.get(`profile/` + userId);
+        console.warn('Warning... Please ProfileApi object');
+        return profileAPI.getProfile(userId)
     },
     follow(id) {
         return instanse.post(`follow/${id}`)
@@ -33,8 +35,25 @@ export const usersAPI = {
             })
     }
 }
+
+
 export const authAPI = {
     me() {
         return instanse.get(`auth/me`);
+    }
+}
+
+
+export const profileAPI = {
+    getProfile(userId) {
+        return instanse.get('profile/' + userId);
+    },
+    getStatus(userId) {
+        return instanse.get('profile/status/' + userId);
+    },
+    updateStatus(status) {
+        return instanse.put('profile/status', {
+            status: status
+        });
     }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { addMessageActionCreator, updateNewMessageTextActionCreator } from '../../redux/messagesReducer';
+import { addMessageActionCreator } from '../../redux/messagesReducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
-import {compose} from 'redux';
+import { compose } from 'redux';
 import { WithAuthRedirect } from '../hoc/WithAuthRedirect';
 //Контейнерная компонента
 let mapStateToProps = (state) => {
@@ -12,20 +12,16 @@ let mapStateToProps = (state) => {
 }
 let mapDispatchToProps = (dispatch) => {
         return {
-            updateNewMessageText: (text) => {
-                let actione = updateNewMessageTextActionCreator(text);
-                dispatch(actione);
-            },
-            addMessage: () => {
-                dispatch(addMessageActionCreator());
+            addMessage: (newMessageText) => {
+                dispatch(addMessageActionCreator(newMessageText));
             }
         }
     }
-//compose видит как оборачивается компонента
+    //compose видит как оборачивается компонента
 export default compose(
     // законектить презентационную компоненту к store
     connect(mapStateToProps, mapDispatchToProps),
     // в hoc передаем целевую компоненту
     // внутри hoc создается классовя(функц-ая) и возвращается
     WithAuthRedirect
-    )(Dialogs);
+)(Dialogs);

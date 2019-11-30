@@ -1,5 +1,4 @@
 const ADD_MESSAGE = 'ADD_MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
 //параметры по умолчанию
 let initialState = {
     dialogs: [
@@ -57,7 +56,6 @@ let initialState = {
         },
 
     ],
-    newMessageText: ""
 };
 //фукнция принимает state actione 
 //возвращает state
@@ -65,41 +63,27 @@ const MessageReducer = (state = initialState, action) => {
         switch (action.type) {
             case ADD_MESSAGE:
                 {
+                    let newText = action.newMessageText;
                     return {
                         ...state,
-                        newMessageText: '',
                         messages: [...state.messages, {
                             id: 6,
-                            message: state.newMessageText
+                            message: newText
                         }],
                     };
                 }
-            case UPDATE_NEW_MESSAGE_TEXT:
-                {
-                    return {
-                        ...state,
-                        newMessageText: action.newText
-                    };
-
-                }
-
             default:
                 return state;
         }
     }
     //утилита (вспомогательная программа),
     //помогает не ошибиться в создании action
-export let addMessageActionCreator = () => {
+export let addMessageActionCreator = (newMessageText) => {
         return {
             type: ADD_MESSAGE,
+            newMessageText
         }
     }
     //утилита (вспомогательная программа),
     //помогает не ошибиться в создании action
-export let updateNewMessageTextActionCreator = (text) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        newText: text
-    }
-}
 export default MessageReducer;
