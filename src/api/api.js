@@ -1,4 +1,7 @@
 import * as axios from 'axios';
+import {
+    login
+} from '../redux/authReducer';
 
 //axios.create-вспомогательная функция
 //держат в себе настройки с некоторой API
@@ -40,6 +43,19 @@ export const usersAPI = {
 export const authAPI = {
     me() {
         return instanse.get(`auth/me`);
+    },
+
+    login(email, password, rememberMe = false) {
+        return instanse.post(`auth/login`, {
+            email,
+            password,
+            rememberMe
+        })
+    },
+
+    logout() {
+        return instanse.delete(`auth/login`)
+
     }
 }
 
