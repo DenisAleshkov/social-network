@@ -6,7 +6,6 @@ import App from './App';
 import store from './redux/redux-store.js';
 import { BrowserRouter } from "react-router-dom";
 import {Provider} from 'react-redux';
-let rerenderEntireTree = (state) => {
 
     ReactDOM.render(
     //BrowserRouter оборачиваем содержимое чтобы
@@ -16,8 +15,7 @@ let rerenderEntireTree = (state) => {
                 <App />
             </Provider>
         </BrowserRouter>, document.getElementById('root'));
-}
-rerenderEntireTree();
+
 
 
 // If you want your app to work offline and load faster, you can change

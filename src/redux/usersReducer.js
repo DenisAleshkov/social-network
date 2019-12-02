@@ -81,9 +81,7 @@ const usersReducer = (state = initialState, action) => {
                 {
                     return {
                         ...state,
-                        followingInProgress: action.isFetching
-                        ?[...state.followingInProgress,action.userID]
-                        : state.followingInProgress.filter(id=>id!=action.userID)
+                        followingInProgress: action.isFetching ? [...state.followingInProgress, action.userID] : state.followingInProgress.filter(id => id != action.userID)
                     }
                 }
             default:
@@ -120,7 +118,7 @@ export const toggleIsFetching = (isFetching) => ({
     type: TOGLE_IS_FETCHING,
     isFetching
 })
-export const toggleFollowingProgress = (isFetching,userID) => ({
+export const toggleFollowingProgress = (isFetching, userID) => ({
     type: TOGGLE_IS_FOLLOWING_PROGRESS,
     isFetching,
     userID
@@ -130,38 +128,40 @@ export const toggleFollowingProgress = (isFetching,userID) => ({
 //связанную с синхронной операцией
 //в thunk диспатчим вызов action-creator
 //вызывается внутри бизнеса
-export const getUsers=(currentPage, pageUsersSize)=>{
-return (dispatch)=>{
-    dispatch(toggleIsFetching(true));
-    usersAPI.getUsers(currentPage, pageUsersSize)
-     .then(data => {
-         dispatch(toggleIsFetching(false));
-         dispatch(setUsers(data.items));
-         dispatch(setUsersTotalCount(data.totalCount));
-     });
-    }
-}
+export const requestUsers = (page, pageUsersSize) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        dispatch(setCurrentPage(page));
 
-export const unfollow=(userID)=>{
-    return (dispatch)=>{
-        dispatch(toggleFollowingProgress(true,userID));
-        usersAPI.unfollow(userID).then(data => {
-         if(data.resultCode==0){
-              dispatch(unFollowSucces(userID)); 
-            }
-            dispatch(toggleFollowingProgress(false,userID));
+        usersAPI.getUsers(page, pageUsersSize)
+            .then(data => {
+                dispatch(toggleIsFetching(false));
+                dispatch(setUsers(data.items));
+                dispatch(setUsersTotalCount(data.totalCount));
             });
     }
 }
 
-export const follow=(userID)=>{
-    return (dispatch)=>{
-        dispatch(toggleFollowingProgress(true,userID));
-        usersAPI.follow(userID).then(data => {
-            if(data.resultCode==0){
-            dispatch(FollowSucces(userID)) 
+export const unfollow = (userID) => {
+    return (dispatch) => {
+        dispatch(toggleFollowingProgress(true, userID));
+        usersAPI.unfollow(userID).then(data => {
+            if (data.resultCode == 0) {
+                dispatch(unFollowSucces(userID));
             }
-             dispatch(toggleFollowingProgress(false,userID));
+            dispatch(toggleFollowingProgress(false, userID));
+        });
+    }
+}
+
+export const follow = (userID) => {
+    return (dispatch) => {
+        dispatch(toggleFollowingProgress(true, userID));
+        usersAPI.follow(userID).then(data => {
+            if (data.resultCode == 0) {
+                dispatch(FollowSucces(userID))
+            }
+            dispatch(toggleFollowingProgress(false, userID));
         });
     }
 }

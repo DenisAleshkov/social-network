@@ -39,7 +39,7 @@ let initialState = {
         },
     ],
     profile: null,
-    status: '',
+    status: "",
 };
 //фукнция принимает state actione 
 //возвращает state
@@ -66,7 +66,7 @@ const ProfileReducer = (state = initialState, action) => {
                 {
                     return {
                         ...state,
-                        profile: action.status
+                        status: action.status
                     }
                 }
 
