@@ -7,7 +7,7 @@ import { required, MaxLengthCreator } from './../../../utils/validators/validato
 
 //утилита (вспомогательная программа),
 //помогает не ошибиться в создании action
-const Posts = (props) => {
+const Posts =React.memo( props => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount} />)
 
@@ -27,7 +27,7 @@ const Posts = (props) => {
         </div>
 
     );
-}
+})
 
 const MaxLength10=MaxLengthCreator(10);
 
@@ -36,7 +36,6 @@ const AddPosts = (props) => {
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field
-                
                     component={Textarea}
                     name={'newPostText'}
                     className={style.textpost}
