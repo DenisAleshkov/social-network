@@ -3,9 +3,9 @@ import style from './ProfileInfo.module.css';
 import Preloader from '../../common/preloader';
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 
-const ProfileInfo = (props) => {
+const ProfileInfo = ({status,profile,updateStatus, ...props }) => {
 
-    if (!props.profile) {
+    if (!profile) {
         return <Preloader />
     }
     
@@ -14,8 +14,8 @@ const ProfileInfo = (props) => {
             
             <img src={props.profile.photos.large} />
             <ProfileStatusWithHooks
-                status={props.status}
-                updateStatus={props.updateStatus} />
+                status={status}
+                updateStatus={updateStatus} />
         </div>
     );
 }

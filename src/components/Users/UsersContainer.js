@@ -17,11 +17,13 @@ class UsersContainer extends React.Component {
     // componentDidUpdate() вызывается сразу после обновления. 
     // Не вызывается при первом рендере.
     componentDidMount() {
-        this.props.requestUsers(this.props.currentPage, this.props.pageUsersSize);
+        let {currentPage,pageUsersSize}=this.props;
+        this.props.requestUsers(currentPage, pageUsersSize);
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.requestUsers(pageNumber, this.props.pageUsersSize);
+        let {pageUsersSize} =this.props;
+        this.props.requestUsers(pageNumber, pageUsersSize);
     }
     //срабатывает сразу
     render() {
