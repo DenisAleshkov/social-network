@@ -25,7 +25,6 @@ class ProfileContainer extends React.Component {
     }
 
     render() {
-        // console.log('render');
         return (
             //презентационная компонента
             <Profile {...this.props}
