@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer.js';
 import Navbar from './components/Navbar/Navbar.js';
-import { Route } from "react-router-dom";
-import DialogsContainer from './components/Dialogs/DialogsContainer.js';
+import { Route, withRouter } from "react-router-dom";
 import UsersContainer from './components/Users/UsersContainer.js';
-import ProfileContainer from './components/Profile/ProfileContainer.js';
 import Login from './components/Login/Login.js';
 import { initializeApp } from './redux/appReducer';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { withRouter } from 'react-router-dom';
 import Preloader from './components/common/preloader';
+import { WithSupsense } from './components/hoc/WithSuspense';
+
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer.js'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer.js'));
 
 
 class App extends React.Component {
@@ -31,11 +33,9 @@ class App extends React.Component {
                     </div>
 
                     <div className="right-content center">
-                        <Route path='/dialogs' render={() =>
-                            <DialogsContainer />} />
+                        <Route path='/dialogs' render={WithSupsense(DialogsContainer)} />
 
-                        <Route path='/profile/:userId?' render={() =>
-                            <ProfileContainer />} />
+                        <Route path='/profile/:userId?' render={WithSupsense(ProfileContainer)} />
 
                         <Route path='/users' render={() =>
                             <UsersContainer />} />

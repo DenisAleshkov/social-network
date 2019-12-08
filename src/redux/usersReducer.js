@@ -1,7 +1,13 @@
 import {
-    usersAPI
+    usersAPI,
+    profileAPI
 } from "../api/api";
-import { updateObjectInArray } from "./../utils/objects-helper.js";
+import {
+    updateObjectInArray
+} from "./../utils/objects-helper.js";
+import {
+    async
+} from "q";
 
 const UNFOLLOW = 'UNFOLLOW';
 const FOLLOW = 'FOLLOW';
@@ -10,6 +16,7 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
 const TOGLE_IS_FETCHING = 'TOGLE_IS_FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
+const SAVE_PHOTO_SUCCES = 'SAVE_PHOTO_SUCCES';
 
 let initialState = {
     users: [],
@@ -26,14 +33,18 @@ const usersReducer = (state = initialState, action) => {
                 //формируем новый объект
                 return {
                     ...state,
-                    users: updateObjectInArray(state.users, action.userID, "id", { followed: true })
+                    users: updateObjectInArray(state.users, action.userID, "id", {
+                        followed: true
+                    })
                 }
             case UNFOLLOW:
                 {
                     //формируем новый объект
                     return {
                         ...state,
-                        users: updateObjectInArray(state.users, action.userID, "id", { followed: false })
+                        users: updateObjectInArray(state.users, action.userID, "id", {
+                            followed: false
+                        })
                     }
                 }
             case SET_USERS:
@@ -71,6 +82,16 @@ const usersReducer = (state = initialState, action) => {
                         followingInProgress: action.isFetching ? [...state.followingInProgress, action.userID] : state.followingInProgress.filter(id => id != action.userID)
                     }
                 }
+            case SAVE_PHOTO_SUCCES:
+                {
+                    return {
+                        ...state,
+                        profile: {
+                            ...state.profile,
+                            photos: action.photos
+                        }
+                    }
+                }
             default:
                 return state;
 
@@ -85,6 +106,10 @@ export const FollowSucces = (userID) => ({
 export const unFollowSucces = (userID) => ({
     type: UNFOLLOW,
     userID
+})
+export const savePhotoSucces = (photos) => ({
+    type: SAVE_PHOTO_SUCCES,
+    photos
 })
 export const setUsers = (users) => ({
         type: SET_USERS,
@@ -154,6 +179,12 @@ export const follow = (userID) => {
     return async(dispatch) => {
         FollowUnfollowFlow(dispatch, userID,
             usersAPI.follow.bind(usersAPI), FollowSucces);
+    }
+}
+export const savePhoto = (file) => async(dispatch) => {
+    let response = await profileAPI.savePhoto(file);
+    if (response.data.resultCode === 0) {
+        dispatch(savePhotoSucces(response.data.data.photos))
     }
 }
 export default usersReducer;

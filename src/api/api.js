@@ -2,6 +2,7 @@ import * as axios from 'axios';
 import {
     login
 } from '../redux/authReducer';
+import { savePhoto } from '../redux/usersReducer';
 
 //axios.create-вспомогательная функция
 //держат в себе настройки с некоторой API
@@ -45,11 +46,12 @@ export const authAPI = {
         return instanse.get(`auth/me`);
     },
 
-    login(email, password, rememberMe = false) {
+    login(email, password, rememberMe = false, captcha = null) {
         return instanse.post(`auth/login`, {
             email,
             password,
-            rememberMe
+            rememberMe,
+            captcha
         })
     },
 
@@ -71,5 +73,20 @@ export const profileAPI = {
         return instanse.put('profile/status', {
             status: status
         });
+    },
+    savePhoto(photoFile) {
+        const formData = new FormData();
+        formData.append('image', photoFile);
+        return instanse.put('profile/photo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    }
+}
+
+export const securityAPI = {
+    getCaptchaUrl() {
+        return instanse.get(`security/get-captcha-url`);
     }
 }
